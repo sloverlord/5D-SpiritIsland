@@ -6,7 +6,7 @@ class MouseManager {
 	
 	snapshot = {
 		x : 0,
-		y : 0
+		y : 1
 	};
 	
 	action = "none";
