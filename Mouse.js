@@ -24,7 +24,7 @@ class MouseManager {
 		if (mouse.action == "pan"){
 			screenPan.x -= mouse.pos.x - mouse.snapshot.x;
 			screenPan.y -= mouse.pos.y - mouse.snapshot.y;
-			
+
 			mouse.snapshot = Object.assign({}, mouse.pos);
 		}
 	}
@@ -39,6 +39,7 @@ class MouseManager {
 				}
 			} else if (e.button == 1){
 				// ^ check middle click
+				screenPan = { x:0, y:0 };
 			} else if (e.button == 2){
 				// ^ check right click
 				mouse.snapshot = Object.assign({}, mouse.pos);

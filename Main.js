@@ -118,16 +118,22 @@ class Main {
 		ctx.strokeRect(0, 0, canv.width, canv.height);
 		
 //		Main.drawGrid();
-		
+
+		// draw lines
 		for (var i = 0; i < Main.timelineTree.timelines.length; i += 1){
 			var turns = Main.timelineTree.timelines[i].getTurns();
-			
+
 			// draw arrow to source timeline
 			var currTimeline = Main.timelineTree.timelines[i];
 			if (currTimeline.source != -1){
 				var parentTurn = Main.timelineTree.getTurn(currTimeline.source, currTimeline.firstTurn.turn - 1);
 				drawNodeConnection(currTimeline.firstTurn.x, currTimeline.firstTurn.y, parentTurn.x, parentTurn.y);
 			}
+		}
+
+		// draw images
+		for (var i = 0; i < Main.timelineTree.timelines.length; i += 1){
+			var turns = Main.timelineTree.timelines[i].getTurns();
 			
 			for (var j = 0; j < turns.length; j += 1){
 				// draw current node
