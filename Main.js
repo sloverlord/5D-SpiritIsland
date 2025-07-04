@@ -8,11 +8,11 @@ class Multiverse {
 		this.timelines[firstTurn.timeline] = new Timeline(source, firstTurn);
 	}
 	
-	addTurn(timeline, turn){
-		this.timelines[timeline].addTurn(new Turn(timeline, turn));
+	addTurn(timeline, turn, phase){
+		this.timelines[timeline].addTurn(new Turn(timeline, turn, phase));
 	}
-	
-	getTurn(turn, timeline){
+
+	getTurn(timeline, turn){
 		return this.timelines[timeline].getTurn(turn);
 	}
 }
@@ -38,9 +38,10 @@ class Timeline {
 }
 
 class Turn {
-	constructor(idx, turn){
+	constructor(idx, turn, phase){
 		this.timeline = idx;
 		this.turn = turn;
+		this.phase = phase;
 		this.nextTurn = null;
 		this.img = imageList[(this.timeline + this.turn) % imageList.length];
 		
@@ -79,7 +80,7 @@ class Turn {
 	}
 	
 	calcCoords(){
-		this.x = 1 + (0 * nodeGap.x) + (this.turn-1) * nodeGap.x * 2;
+		this.x = 1 + (this.phase * nodeGap.x) + (this.turn-1) * nodeGap.x * 2;
 		this.y = 3 + (this.timeline-1) * nodeGap.x;
 	}
 }
@@ -124,7 +125,7 @@ class Main {
 			// draw arrow to source timeline
 			var currTimeline = Main.timelineTree.timelines[i];
 			if (currTimeline.source != -1){
-				var parentTurn = Main.timelineTree.getTurn(currTimeline.firstTurn.turn-1, currTimeline.source);
+				var parentTurn = Main.timelineTree.getTurn(currTimeline.source, currTimeline.firstTurn.turn - 1);
 				drawNodeConnection(currTimeline.firstTurn.x, currTimeline.firstTurn.y, parentTurn.x, parentTurn.y);
 			}
 			
