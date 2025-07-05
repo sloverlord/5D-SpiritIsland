@@ -4,36 +4,49 @@ const SLOW = 1;
 class Multiverse {
 	timelines = [];
 	
-	addBranch(source, firstTurn){
-		this.timelines[firstTurn.timeline] = new Timeline(source, firstTurn);
+	addBranch(source){
+		this.timelines[this.timelines.length] = new Timeline(source, this.timelines.length);
 	}
 	
 	addTurn(timeline, turn, phase){
 		this.timelines[timeline].addTurn(new Turn(timeline, turn, phase));
 	}
 
-	getTurn(timeline, turn){
-		return this.timelines[timeline].getTurn(turn);
+	getTurn(timeline, turn, phase){
+		return this.timelines[timeline].getTurn(turn, phase);
 	}
 }
 
 class Timeline {
-	constructor(source, start){
-		this.timelineIdx = start.timeline;
+	constructor(source, timeline){
+		this.timelineIdx = timeline;
 		this.source = source;
-		this.firstTurn = start;
+		this.firstTurn = null;
 	}
 	
 	addTurn(turn){
-		return (this.firstTurn.addTurn(turn));
+		if (this.firstTurn != null) {
+			return (this.firstTurn.addTurn(turn));
+		} else {
+			this.firstTurn = turn;
+			return true;
+		}
 	}
-	
-	getTurn(turn){
-		return this.firstTurn.findTurn(turn);
+
+	getTurn(turn, phase){
+		if (this.firstTurn != null) {
+			return this.firstTurn.findTurn(turn, phase);
+		} else {
+			return null;
+		}
 	}
 	
 	getTurns(){
-		return this.firstTurn.getTurns();
+		if (this.firstTurn != null) {
+			return this.firstTurn.getTurns();
+		} else {
+			return [];
+		}
 	}
 }
 
@@ -43,7 +56,7 @@ class Turn {
 		this.turn = turn;
 		this.phase = phase;
 		this.nextTurn = null;
-		this.img = imageList[(this.timeline + this.turn) % imageList.length];
+		this.img = imageList[(this.timeline + this.turn + this.phase * 7) % imageList.length];
 		
 		this.x, this.y;
 		this.calcCoords();
@@ -58,13 +71,13 @@ class Turn {
 		}
 	}
 	
-	findTurn(turn){
-		if (this.turn == turn){
+	findTurn(turn, phase){
+		if (this.turn == turn && this.phase == phase){
 			return this;
 		} else if (this.turn > turn){
 			return null;
 		} else if(this.nextTurn != null) {
-			return this.nextTurn.findTurn(turn);
+			return this.nextTurn.findTurn(turn, phase);
 		} else {
 			return null;
 		}
@@ -82,6 +95,21 @@ class Turn {
 	calcCoords(){
 		this.x = 1 + (this.phase * nodeGap.x) + (this.turn-1) * nodeGap.x * 2;
 		this.y = 3 + (this.timeline-1) * nodeGap.x;
+	}
+
+	calcPrevTurn(){
+		var dat = {
+			turn:this.turn,
+			phase:this.phase
+		};
+
+		if (dat.phase == FAST){
+			dat.turn -= 1;
+		}
+
+		dat.phase = (dat.phase + 1) % 2;
+
+		return dat;
 	}
 }
 
@@ -126,7 +154,8 @@ class Main {
 			// draw arrow to source timeline
 			var currTimeline = Main.timelineTree.timelines[i];
 			if (currTimeline.source != -1){
-				var parentTurn = Main.timelineTree.getTurn(currTimeline.source, currTimeline.firstTurn.turn - 1);
+				var prev = currTimeline.firstTurn.calcPrevTurn();
+				var parentTurn = Main.timelineTree.getTurn(currTimeline.source, prev.turn, prev.phase);
 				drawNodeConnection(currTimeline.firstTurn.x, currTimeline.firstTurn.y, parentTurn.x, parentTurn.y);
 			}
 		}
