@@ -73,9 +73,16 @@ function load(){
 	
 	loadedImgs = 0
 	imageList.push("timelines/board.png");
-	imageList.push("timelines/1-2.png");
-	imageList.push("timelines/2-2.png");
-	imageList.push("timelines/1-3.png");
+	imageList.push("timelines/0/1-f.png");
+	imageList.push("timelines/0/1-s.png");
+	imageList.push("timelines/0/2-f.png");
+	imageList.push("timelines/0/2-s.png");
+	imageList.push("timelines/0/3-f.png");
+	imageList.push("timelines/0/3-s.png");
+	imageList.push("timelines/0/4-f.png");
+	imageList.push("timelines/1-0/2-f.png");
+	imageList.push("timelines/1-0/2-s.png");
+	imageList.push("timelines/1-0/3-f.png");
 	imageList = loadImages(imageList);
 }
 
