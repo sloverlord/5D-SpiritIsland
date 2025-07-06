@@ -61,7 +61,13 @@ class Turn {
 		this.x, this.y;
 		this.calcCoords();
 	}
-	
+
+	toString(){
+		var timeline = String.fromCharCode(this.timeline + 65);
+		var phase = (this.phase == FAST) ? "Fast" : "Slow";
+		return timeline + ", " + this.turn + ", " + phase;
+	}
+
 	addTurn(turn){
 		if(this.nextTurn == null){
 			this.nextTurn = turn;
@@ -189,12 +195,43 @@ class Main {
 				ctx.drawImage(turnToSee.img, xPos, yPos, imgWidth, imgHeight);
 				ctx.lineWidth = 10;
 				ctx.strokeRect(xPos, yPos, turnToSee.img.width * imgScale, turnToSee.img.height * imgScale);
+
+				// turn info display
+				var pos = { x:10, y:10 };
+				var dim = { width:gridSize*4, height:gridSize };
+				Main.drawLabel(turnToSee.toString(), pos.x, pos.y, dim.width, dim.height);
 			}
 		}
 		
 	//	mouse.draw();
 	}
-	
+
+	static drawLabel(text, x, y, w, h){
+		var fontSize = gridSize;
+		var border = 10;
+
+		ctx.fillRect(x, y, w, h);
+		ctx.lineWidth = border;
+		ctx.strokeRect(x, y, w, h);
+
+		// shrink text to fit in outline
+		w -= border*2;
+
+		ctx.font = fontSize + 'px serif';
+		var textInfo = ctx.measureText(text);
+		var fontScale = w / textInfo.width;
+		if (fontScale < 1){	fontSize *= fontScale; }
+
+		// center text
+		x += w/2 + border;
+		y += h/2 + fontSize/2 - border*2;
+
+		ctx.textAlign = "center";
+		ctx.fillStyle = "black";
+		ctx.font = fontSize + 'px serif';
+		ctx.fillText(text, x, y);
+	}
+
 	static drawGrid(){
 		ctx.lineWidth = 1;
 		var cols = canv.width / gridSize;

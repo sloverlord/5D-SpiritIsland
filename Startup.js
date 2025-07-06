@@ -6,6 +6,7 @@ const ARROWUP = 4;
 const ARROWDOWN = 5;
 
 var midPoint = { x:0, y:0 };
+var gridMin = 8;
 var gridSize;
 var screenMax = { x:0, y:0 };
 var screenPan = { x:0, y:0 };
@@ -30,10 +31,10 @@ window.onload = function() {
 	
 	if (canv.width * 21 < canv.height * 10){
 		canv.height = canv.width * 10 / 21;
-		gridSize = canv.width/10;
+		gridSize = canv.width/gridMin;
 	} else {
 		canv.width = canv.height * 21 / 10;
-		gridSize = canv.height/10;
+		gridSize = canv.height/gridMin;
 	}
 	
 	ctx = canv.getContext("2d");
@@ -97,21 +98,6 @@ function loadImages(imagePaths){
 	}
 	
 	return imgObjs;
-}
-
-function textOnGrid(textToDraw, x, y, tileScale){
-	var buffer = (gridSize * tileScale) / 20;
-	// set up text writing
-	ctx.textAlign = "left";
-	ctx.fillStyle = "black";
-	ctx.font = (gridSize * tileScale) + 'px serif';
-	
-	var drawX = gridSize * x - screenPan.x;
-	var drawY = gridSize * y - screenPan.y;
-	ctx.fillText(textToDraw, drawX, drawY);
-	
-	screenMax.x = Math.max(screenMax.x, drawX + gridSize * (tileScale + 2) + screenPan.x);
-	screenMax.y = Math.max(screenMax.y, drawY + gridSize * (tileScale + 2) + screenPan.y);
 }
 
 function imageOnGrid(imageToDraw, x, y, tileScale){
