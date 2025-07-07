@@ -17,6 +17,8 @@ function createTimelines(){
 	Main.timelineTree.addTurn(1, 3, FAST);
 
 	Main.timelineTree.addTurn(2, 3, FAST);
+	Main.timelineTree.addTurn(2, 3, SLOW);
+	Main.timelineTree.addTurn(2, 4, FAST);
 
 	Main.timelineTree.addTurn(3, 3, SLOW);
 }

@@ -100,6 +100,17 @@ function loadImages(imagePaths){
 	return imgObjs;
 }
 
+function getColor(num)
+{
+	var hash = 5381;
+
+	for (var i = 0; i < num + 10; i++) {
+		hash = hash * 33 + i;
+	}
+
+	return "#" + ((hash % 16777215).toString(16));
+}
+
 function imageOnGrid(imageToDraw, x, y, tileScale){
 	var drawX = gridSize * x - screenPan.x;
 	var drawY = gridSize * y - screenPan.y;
@@ -110,7 +121,10 @@ function imageOnGrid(imageToDraw, x, y, tileScale){
 	screenMax.y = Math.max(screenMax.y, drawY + gridSize * (tileScale + 2) + screenPan.y);
 }
 
-function drawNodeConnection(x1, y1, x2, y2){
+function drawNodeConnection(x1, y1, x2, y2, timeline){
+	// get line color
+	ctx.strokeStyle = getColor(timeline);
+
 	ctx.lineWidth = 3;
 	
 	// convert grid coords to screen coords

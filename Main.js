@@ -162,7 +162,7 @@ class Main {
 			if (currTimeline.source != -1){
 				var prev = currTimeline.firstTurn.calcPrevTurn();
 				var parentTurn = Main.timelineTree.getTurn(currTimeline.source, prev.turn, prev.phase);
-				drawNodeConnection(currTimeline.firstTurn.x, currTimeline.firstTurn.y, parentTurn.x, parentTurn.y);
+				drawNodeConnection(currTimeline.firstTurn.x, currTimeline.firstTurn.y, parentTurn.x, parentTurn.y, currTimeline.timelineIdx);
 			}
 		}
 
@@ -172,7 +172,7 @@ class Main {
 			
 			for (var j = 0; j < turns.length; j += 1){
 				// draw current node
-				if(turns[j].nextTurn != null){ drawNodeConnection(turns[j].x, turns[j].y, turns[j].nextTurn.x, turns[j].y); }
+				if(turns[j].nextTurn != null){ drawNodeConnection(turns[j].x, turns[j].y, turns[j].nextTurn.x, turns[j].nextTurn.y, turns[j].timeline); }
 				imageOnGrid(turns[j].img, turns[j].x, turns[j].y, 1)
 			}
 		}
@@ -194,42 +194,44 @@ class Main {
 				
 				ctx.drawImage(turnToSee.img, xPos, yPos, imgWidth, imgHeight);
 				ctx.lineWidth = 10;
+				ctx.strokeStyle = getColor(turnToSee.timeline);
 				ctx.strokeRect(xPos, yPos, turnToSee.img.width * imgScale, turnToSee.img.height * imgScale);
 
 				// turn info display
 				var pos = { x:10, y:10 };
 				var dim = { width:gridSize*4, height:gridSize };
-				Main.drawLabel(turnToSee.toString(), pos.x, pos.y, dim.width, dim.height);
+				Main.drawLabel(turnToSee, pos.x, pos.y, dim.width, dim.height);
 			}
 		}
 		
 	//	mouse.draw();
 	}
 
-	static drawLabel(text, x, y, w, h){
+	static drawLabel(turn, x, y, w, h){
 		var fontSize = gridSize;
-		var border = 10;
+		var border = gridSize / 15;
 
 		ctx.fillRect(x, y, w, h);
 		ctx.lineWidth = border;
+		ctx.strokeStyle = getColor(turn.timeline);
 		ctx.strokeRect(x, y, w, h);
 
 		// shrink text to fit in outline
 		w -= border*2;
 
 		ctx.font = fontSize + 'px serif';
-		var textInfo = ctx.measureText(text);
+		var textInfo = ctx.measureText(turn.toString());
 		var fontScale = w / textInfo.width;
 		if (fontScale < 1){	fontSize *= fontScale; }
 
 		// center text
 		x += w/2 + border;
-		y += h/2 + fontSize/2 - border*2;
+		y += h/2 + fontSize/2 - border*3;
 
 		ctx.textAlign = "center";
 		ctx.fillStyle = "black";
 		ctx.font = fontSize + 'px serif';
-		ctx.fillText(text, x, y);
+		ctx.fillText(turn.toString(), x, y);
 	}
 
 	static drawGrid(){
