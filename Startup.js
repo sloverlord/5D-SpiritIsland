@@ -73,7 +73,6 @@ function load(){
 	imgScale = gridSize;
 	
 	loadedImgs = 0
-	imageList.push("timelines/board.png");
 	imageList.push("timelines/0/1-f.png");
 	imageList.push("timelines/0/1-s.png");
 	imageList.push("timelines/0/2-f.png");
