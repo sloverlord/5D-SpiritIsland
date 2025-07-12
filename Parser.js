@@ -1,34 +1,25 @@
 function parseTimelines() {
     try {
-        const timelines = TIMELINES_DATA;
-        const allTurns = timelines.timelines.flatMap(timeline => timeline.turns);
+        const timelinesData = TIMELINES_DATA;
+        let timelinesMap = {};
+        for (let timeline of timelinesData.timelines) {
+            timelinesMap[timeline.id] = timeline;
+        }
 
-        const turnsByNumber = {};
-        for (const turn of allTurns) {
-            if (!turnsByNumber[turn.number]) {
-                turnsByNumber[turn.number] = [];
+        // Ensure that each turn contains only s or f phases
+        for (let [id, timeline] of Object.entries(timelinesMap)) {
+            if (id === undefined) {
+                throw new Error('Invalid timeline number');
             }
-            turnsByNumber[turn.number].push(turn.phase);
-
-            for (const [number, phase] of Object.entries(turnsByNumber)) {
-                const fastCount = phase.filter(phase => phase === FAST).length;
-                const slowCount = phase.filter(phase => phase === SLOW).length;
-
-                // TODO: Make sure turns always have monotonically-increasing numbers
-
-                const invalidPhases = phases.filter(phase => phase !== FAST && phase !== SLOW);
-                if (invalidPhases.length > 0) {
-                    throw new Error(`Invalid phases: ${invalidPhases.join(', ')}`);
-                }
-
-                if (fastCount > 1 || slowCount > 1) {
-                    throw new Error(`Turn ${number} has multiple phases: ${phases.join(', ')}`);
+            const turnsList = timeline.turns;
+            for (let turn of turnsList) {
+                if (turn.phase !== 'f' && turn.phase !== 's') {
+                    throw new Error(`Invalid phase: ${turn.phase}`);
                 }
             }
         }
 
-        console.log(timelines);
-        return timelines;
+        return timelinesMap;
     } catch (e) {
         console.log(e);
         return null;
