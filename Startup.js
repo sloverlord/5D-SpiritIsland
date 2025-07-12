@@ -13,8 +13,8 @@ var screenPan = { x:0, y:0 };
 
 var activeInterval;
 var activeKeyRemover;
-var imageList = [];
-var loadedImgs;
+var imageMap = {};
+var loadedImgs = 0;
 var imgScale;
 var nodeGap = { x:2, y:2 };
 
@@ -48,7 +48,7 @@ window.onload = function() {
 }
 
 function loadInterval(){
-	if (loadedImgs = imageList.length){
+	if (loadedImgs == imageMap.size){
 		Main.setup();
 		Main.activate();
 	} else {
@@ -58,11 +58,11 @@ function loadInterval(){
 		ctx.strokeRect(0, 0, canv.width, canv.height);
 		
 		// set up text writing
-		ctx.font = 3*gridSize-10 + 'px serif';
+		ctx.font = 3 * gridSize - 10 + 'px serif';
 		
 		ctx.textAlign = "center";
 		ctx.fillStyle = "black";
-		ctx.fillText(loadedImgs + "/" + imageList.length, midPoint.x, midPoint.y);
+		ctx.fillText(loadedImgs + "/" + imageMap.size, midPoint.x, midPoint.y);
 	}
 }
 
@@ -71,32 +71,47 @@ function load(){
 	midPoint.y = canv.height/2;
 	
 	imgScale = gridSize;
-	
-	loadedImgs = 0
-	imageList.push("timelines/0/1-f.png");
-	imageList.push("timelines/0/1-s.png");
-	imageList.push("timelines/0/2-f.png");
-	imageList.push("timelines/0/2-s.png");
-	imageList.push("timelines/0/3-f.png");
-	imageList.push("timelines/0/3-s.png");
-	imageList.push("timelines/0/4-f.png");
-	imageList.push("timelines/1-0/2-f.png");
-	imageList.push("timelines/1-0/2-s.png");
-	imageList.push("timelines/1-0/3-f.png");
-	imageList = loadImages(imageList);
+
+	let timelinesMap = parseTimelines();
+	addTimelinesToTree(timelinesMap);
+	let imagePaths = Object.values(timelinesMap)
+		.flatMap(timeline => timeline.turns)
+		.flatMap(turn => turn.image);
+
+	imageMap = loadImages(imagePaths);
 }
 
-function loadImages(imagePaths){
-	toLoad = imagePaths.length;
-	var imgObjs = [];
+function addTimelinesToTree(timelinesMap) {
+	for (let timeline of Object.values(timelinesMap)) {
+		Main.timelineTree.addBranch(timeline.source);
+		for (let turn of timeline.turns) {
+			Main.timelineTree.addTurn(
+				Number(timeline.id),
+				Number(turn.number),
+				getPhase(turn.phase),
+				turn.image);
+		}
+	}
+}
+
+function getPhase(phase) {
+	return phase == "f" ? FAST : SLOW;
+}
+
+function loadImages(imagePaths) {
+	var toLoad = imagePaths.length;
+	var imgPathMap = new Map();
 	
-	for (var i = 0; i < toLoad; i += 1){
-		imgObjs[i] = new Image();
-		imgObjs[i].onload = function() { loadedImgs++; }
-		imgObjs[i].src = imagePaths[i];
+	for (var i = 0; i < toLoad; i += 1) {
+		imgObj = new Image();
+		imgObj.onload = function () {
+			loadedImgs++;
+		}
+		imgObj.src = imagePaths[i];
+		imgPathMap.set(imagePaths[i], imgObj);
 	}
 	
-	return imgObjs;
+	return imgPathMap;
 }
 
 function getColor(num)

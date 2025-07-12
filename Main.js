@@ -8,8 +8,8 @@ class Multiverse {
 		this.timelines[this.timelines.length] = new Timeline(source, this.timelines.length);
 	}
 	
-	addTurn(timeline, turn, phase){
-		this.timelines[timeline].addTurn(new Turn(timeline, turn, phase));
+	addTurn(timeline, turn, phase, image){
+		this.timelines[timeline].addTurn(new Turn(timeline, turn, phase, image));
 	}
 
 	getTurn(timeline, turn, phase){
@@ -51,12 +51,12 @@ class Timeline {
 }
 
 class Turn {
-	constructor(idx, turn, phase){
-		this.timeline = idx;
+	constructor(timeline, turn, phase, img){
+		this.timeline = timeline;
 		this.turn = turn;
 		this.phase = phase;
 		this.nextTurn = null;
-		this.img = imageList[(this.timeline + this.turn + this.phase * 7) % imageList.length];
+		this.img = img;
 		
 		this.x, this.y;
 		this.calcCoords();
@@ -137,10 +137,10 @@ class Main {
 	}
 	
 	static setup(){
-		createTimelines();
+        // ???
 	}
 	
-	static loop (){
+	static loop(){
 		Main.draw();
 	}
 	
@@ -155,8 +155,6 @@ class Main {
 
 		// draw lines
 		for (var i = 0; i < Main.timelineTree.timelines.length; i += 1){
-			var turns = Main.timelineTree.timelines[i].getTurns();
-
 			// draw arrow to source timeline
 			var currTimeline = Main.timelineTree.timelines[i];
 			if (currTimeline.source != -1){
@@ -173,7 +171,7 @@ class Main {
 			for (var j = 0; j < turns.length; j += 1){
 				// draw current node
 				if(turns[j].nextTurn != null){ drawNodeConnection(turns[j].x, turns[j].y, turns[j].nextTurn.x, turns[j].nextTurn.y, turns[j].timeline); }
-				imageOnGrid(turns[j].img, turns[j].x, turns[j].y, 1)
+				imageOnGrid(imageMap.get(turns[j].img), turns[j].x, turns[j].y, 1)
 			}
 		}
 		
@@ -192,7 +190,7 @@ class Main {
 				var xPos = midPoint.x - (imgWidth / 2);
 				var yPos = midPoint.y - (imgHeight / 2);
 				
-				ctx.drawImage(turnToSee.img, xPos, yPos, imgWidth, imgHeight);
+				ctx.drawImage(imageMap.get(turnToSee.img), xPos, yPos, imgWidth, imgHeight);
 				ctx.lineWidth = 10;
 				ctx.strokeStyle = getColor(turnToSee.timeline);
 				ctx.strokeRect(xPos, yPos, turnToSee.img.width * imgScale, turnToSee.img.height * imgScale);
