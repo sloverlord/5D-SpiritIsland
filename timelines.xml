@@ -5,30 +5,37 @@
 			<turn>
 				<number>1</number>
 				<phase>f</phase>
+				<img>timelines/0/1-f.png</img>
 			</turn>
 			<turn>
 				<number>1</number>
 				<phase>s</phase>
+				<img>timelines/0/1-s.png</img>
 			</turn>
 			<turn>
 				<number>2</number>
 				<phase>f</phase>
+				<img>timelines/0/2-f.png</img>
 			</turn>
 			<turn>
 				<number>2</number>
 				<phase>s</phase>
+				<img>timelines/0/2-s.png</img>
 			</turn>
 			<turn>
 				<number>3</number>
 				<phase>f</phase>
+				<img>timelines/0/3-f.png</img>
 			</turn>
 			<turn>
 				<number>3</number>
 				<phase>s</phase>
+				<img>timelines/0/3-s.png</img>
 			</turn>
 			<turn>
 				<number>4</number>
 				<phase>f</phase>
+				<img>timelines/0/4-f.png</img>
 			</turn>
 	</timeline>
 	<timeline>
@@ -37,14 +44,17 @@
 			<turn>
 				<number>2</number>
 				<phase>f</phase>
+				<img>timelines/1-0/2-f.png</img>
 			</turn>
 			<turn>
 				<number>2</number>
 				<phase>s</phase>
+				<img>timelines/1-0/2-s.png</img>
 			</turn>
 			<turn>
 				<number>3</number>
 				<phase>f</phase>
+				<img>timelines/1-0/3-f.png</img>
 			</turn>
 	</timeline>
 </multiverse>

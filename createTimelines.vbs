@@ -31,13 +31,14 @@ For Each objSubfolder In colSubfolders
 	end if
 	
 	' setup turns based on image names
-	tempPath = strFolderPath & "\" & objSubfolder.Name
+	tempPath = strFolderPath & "/" & objSubfolder.Name
 	set tempFolder = objFSO.GetFolder(tempPath)
 	for each f in tempFolder.files
 		objFile.Write vbTab & vbTab & vbTab & "<turn>" & vbCrLf
 		data = Split(f.Name, "-")
 		objFile.Write vbTab & vbTab & vbTab & vbTab & "<number>" & data(0) & "</number>" & vbCrLf
 		objFile.Write vbTab & vbTab & vbTab & vbTab & "<phase>" & Split(data(1),".")(0) & "</phase>" & vbCrLf
+		objFile.Write vbTab & vbTab & vbTab & vbTab & "<img>" & tempPath & "/" & f.Name & "</img>" & vbCrLf
 		objFile.Write vbTab & vbTab & vbTab & "</turn>" & vbCrLf
 	next
 
