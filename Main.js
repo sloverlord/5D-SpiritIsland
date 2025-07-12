@@ -51,8 +51,8 @@ class Timeline {
 }
 
 class Turn {
-	constructor(idx, turn, phase){
-		this.timeline = idx;
+	constructor(timeline, turn, phase){
+		this.timeline = timeline;
 		this.turn = turn;
 		this.phase = phase;
 		this.nextTurn = null;

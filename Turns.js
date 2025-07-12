@@ -21,4 +21,10 @@ function createTimelines(){
 	Main.timelineTree.addTurn(2, 4, FAST);
 
 	Main.timelineTree.addTurn(3, 3, SLOW);
+
+	// Example usage:
+	const timelines = parseTimelines();
+	if (timelines) {
+		console.log(JSON.stringify(timelines, null, 2));
+	}
 }
