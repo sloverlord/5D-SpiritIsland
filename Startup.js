@@ -54,7 +54,7 @@ function loadInterval(){
 	} else {
 		ctx.fillStyle = bgColor;
 		ctx.fillRect(0, 0, canv.width, canv.height);
-		ctx.fillStyle = "black";
+		ctx.strokeStyle = "black";
 		ctx.strokeRect(0, 0, canv.width, canv.height);
 		
 		// set up text writing
@@ -63,6 +63,11 @@ function loadInterval(){
 		ctx.textAlign = "center";
 		ctx.fillStyle = "black";
 		ctx.fillText(loadedImgs + "/" + imageMap.size, midPoint.x, midPoint.y);
+
+		ctx.fillStyle = "green";
+		ctx.fillRect(gridSize, gridSize * (gridMin-2), loadedImgs/imageMap.size * gridSize*(Math.floor(canv.width/gridSize)-2), gridSize);
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(gridSize, gridSize * (gridMin-2), gridSize*(Math.floor(canv.width/gridSize)-2), gridSize);
 	}
 }
 

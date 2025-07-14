@@ -180,20 +180,21 @@ class Main {
 			
 			if (turnToSee != null){
 				var screenFill = .95;
+				var img = imageMap.get(turnToSee.img);
 				
 				//rescale image
-				var imgScale = Math.min((canv.width*screenFill)/turnToSee.img.width, (canv.height*screenFill)/turnToSee.img.height);
-				var imgWidth = turnToSee.img.width * imgScale;
-				var imgHeight = turnToSee.img.height * imgScale;
+				var imgScale = Math.min((canv.width*screenFill)/img.width, (canv.height*screenFill)/img.height);
+				var imgWidth = img.width * imgScale;
+				var imgHeight = img.height * imgScale;
 				
 				// center image
 				var xPos = midPoint.x - (imgWidth / 2);
 				var yPos = midPoint.y - (imgHeight / 2);
 				
-				ctx.drawImage(imageMap.get(turnToSee.img), xPos, yPos, imgWidth, imgHeight);
+				ctx.drawImage(img, xPos, yPos, imgWidth, imgHeight);
 				ctx.lineWidth = 10;
 				ctx.strokeStyle = getColor(turnToSee.timeline);
-				ctx.strokeRect(xPos, yPos, turnToSee.img.width * imgScale, turnToSee.img.height * imgScale);
+				ctx.strokeRect(xPos, yPos, img.width * imgScale, img.height * imgScale);
 
 				// turn info display
 				var pos = { x:10, y:10 };
