@@ -55,3 +55,5 @@ objFile.Close
 Set colSubfolders = Nothing
 Set objFolder = Nothing
 Set objFSO = Nothing
+
+wscript.echo "Done"
