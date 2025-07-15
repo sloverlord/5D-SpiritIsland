@@ -30,4 +30,5 @@ jobs:
           git add timelines.js
           # only commit if there are changes
           git diff --cached --quiet || git commit -m "chore: update timelines.js"
+          git pull
           git push
