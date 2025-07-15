@@ -6,6 +6,8 @@ on:
 jobs:
   update-timelines:
   #  if: github.event.pull_request.merged == true
+    permissions:
+      contents: write
     runs-on: windows-latest
     defaults:
       run:
