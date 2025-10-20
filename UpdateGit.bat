@@ -6,4 +6,3 @@ git checkout -b me
 git add *
 git commit -m "les go"
 git push
-git merge main
