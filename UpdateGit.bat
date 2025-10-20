@@ -1,6 +1,6 @@
 @echo off
 pushd %~dp0
-cscript createTimelines.vbs
+'cscript createTimelines.vbs
 
 git add .
 git commit -m "les go"
