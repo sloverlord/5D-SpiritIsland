@@ -5,3 +5,4 @@ cscript createTimelines.vbs
 git add *
 git commit -m "les go"
 git push
+git merge

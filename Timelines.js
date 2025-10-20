@@ -75,12 +75,12 @@ const TIMELINES_DATA = {
 		},
 		{
 			"id": 3,
-			"source": 1,
+			"source": 0,
 			"turns": [
 				{
 					"number": 2,
-					"phase": "f",
-					"image": "timelines/3-1/2-f.png"
+					"phase": "s",
+					"image": "timelines/3-0/2-s.png"
 				},
 			]
 		},
