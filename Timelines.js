@@ -78,9 +78,9 @@ const TIMELINES_DATA = {
 			"source": 1,
 			"turns": [
 				{
-					"number": 1,
-					"phase": "s",
-					"image": "timelines/3-1/1-s.png"
+					"number": 2,
+					"phase": "f",
+					"image": "timelines/3-1/2-f.png"
 				},
 			]
 		},
