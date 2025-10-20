@@ -8,4 +8,3 @@ git commit -a -m "les go"
 git push
 git checkout master
 git merge me
-rem git branch -d hotfix
