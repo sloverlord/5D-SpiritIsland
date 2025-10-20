@@ -4,7 +4,7 @@ cscript createTimelines.vbs
 
 git checkout -b img main
 git add *
-git commit -m "les go"
+git commit -m "add new turns"
 git push
 
 git checkout main
