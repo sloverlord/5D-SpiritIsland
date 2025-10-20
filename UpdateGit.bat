@@ -2,9 +2,10 @@
 pushd %~dp0
 cscript createTimelines.vbs
 
-git checkout -b me
+git checkout -b img
 git add *
-git commit -m "les go"
+git commit -a -m "les go"
 git push
 git checkout master
-git merge me
+git merge img
+rem git branch -d hotfix
