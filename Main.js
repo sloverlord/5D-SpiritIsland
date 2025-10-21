@@ -147,9 +147,6 @@ class Main {
 	static draw(){
 		ctx.fillStyle = bgColor;
 		ctx.fillRect(0, 0, canv.width, canv.height);
-		ctx.strokeStyle = "black";
-		ctx.lineWidth = 1;
-		ctx.strokeRect(0, 0, canv.width, canv.height);
 		
 //		Main.drawGrid();
 
@@ -204,6 +201,9 @@ class Main {
 		}
 		
 	//	mouse.draw();
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+		ctx.strokeRect(0, 0, canv.width, canv.height);
 	}
 
 	static drawLabel(turn, x, y, w, h){
