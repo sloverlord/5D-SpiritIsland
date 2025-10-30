@@ -39,7 +39,7 @@ class MouseManager {
 				}
 			} else if (e.button == 1){
 				// ^ check middle click
-				screenPan = { x:0, y:0 };
+				screenPan = { x:gridSize/2, y:gridSize/2 };
 			} else if (e.button == 2){
 				// ^ check right click
 				mouse.snapshot = Object.assign({}, mouse.pos);

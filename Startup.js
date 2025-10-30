@@ -36,7 +36,9 @@ window.onload = function() {
 		canv.width = canv.height * 21 / 10;
 		gridSize = canv.height/gridMin;
 	}
-	
+
+	screenPan.x += gridSize/2;
+	screenPan.y += gridSize/2;
 	ctx = canv.getContext("2d");
 	
 	load();
